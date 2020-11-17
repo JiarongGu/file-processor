@@ -1,0 +1,19 @@
+{
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    "lodash",
+    "react-hot-loader/babel",
+    "babel-plugin-react-css-modules",
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "lib",
+        "style": "css"
+      }
+    ]
+  ]
+}

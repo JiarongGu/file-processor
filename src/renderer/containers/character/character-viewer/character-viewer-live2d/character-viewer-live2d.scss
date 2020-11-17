@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-width: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.canvas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  &--moving {
+    cursor: move;
+  }
+}
+
+.navigation-button {
+  position: absolute;
+  height: 100%;
+  background-color: #e8e8e8;
+  outline: none;
+  border: none;
+  appearance: none;
+  opacity: 0;
+  width: 24px;
+
+  &:hover {
+    opacity: 100;
+  }
+  
+  &.left {
+    left: 0;
+  }
+
+  &.right {
+    right: 0;
+  }
+}

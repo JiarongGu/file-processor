@@ -10,7 +10,6 @@ export class BlobService {
   private readonly _fileService = new RemoteService<IFileService>(RemoteServiceType.File);
   private readonly _objectUrls: Array<string> = [];
 
-  @memorizeAsync(BlobService.cacheContext)
   public async read(filePath: string, type: BlobReadType) {
     const fileReadType = this.toFileType(type);
     const result = await this._fileService.invoke('read', filePath, fileReadType);

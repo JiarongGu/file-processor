@@ -2,16 +2,11 @@ import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 import { FileProcessSetting } from '@shared/models/file-process-setting';
-import { CommonFileProcessSetting } from '@shared/models/file-process-setting/common-file-process-setting';
-import { ExcelFieldProcessSetting } from '@shared/models/file-process-setting/excel-process-setting';
 import { FileProcessSettingType } from '@shared/models/file-process-setting/file-process-setting-type.enum';
 import { IFileProcessSettingRepository } from '@shared/remote/file-process-setting-repository';
-import { dbContext } from '../db-context';
+import { dbContext } from './db-context';
 
 export class FileProcessSettingRepository implements IFileProcessSettingRepository {
-  async list(type: FileProcessSettingType.Common): Promise<CommonFileProcessSetting[]>;
-  async list(type: FileProcessSettingType.Excel): Promise<ExcelFieldProcessSetting[]>;
-  async list(): Promise<FileProcessSetting[]>;
   async list(type?: FileProcessSettingType): Promise<FileProcessSetting[]> {
     const collection = await this.collection();
     if (!type) {
@@ -21,9 +16,6 @@ export class FileProcessSettingRepository implements IFileProcessSettingReposito
     }
   }
 
-  async fetch(id: string, type: FileProcessSettingType.Common): Promise<CommonFileProcessSetting>;
-  async fetch(id: string, type: FileProcessSettingType.Excel): Promise<ExcelFieldProcessSetting>;
-  async fetch(id: string): Promise<FileProcessSetting>;
   async fetch(id: string, _?: FileProcessSettingType): Promise<FileProcessSetting> {
     const collection = await this.collection();
     return collection
@@ -32,8 +24,6 @@ export class FileProcessSettingRepository implements IFileProcessSettingReposito
       .value();
   }
 
-  async create(value: CommonFileProcessSetting): Promise<CommonFileProcessSetting>;
-  async create(value: ExcelFieldProcessSetting): Promise<ExcelFieldProcessSetting>;
   async create(value: FileProcessSetting): Promise<FileProcessSetting> {
     value.id = uuid();
     const collection = await this.collection();

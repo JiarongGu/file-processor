@@ -4,7 +4,7 @@ import * as lowdb from 'lowdb';
 import { PathService } from '@main/services';
 
 export interface DataModel {
-  "file-process-setting": FileProcessSetting[];
+  "file-source-setting": FileProcessSetting[];
 }
 
 export const dbContext = async () => {

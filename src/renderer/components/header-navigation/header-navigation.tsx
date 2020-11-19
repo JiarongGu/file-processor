@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 
 import { RouteModel } from '@models/route';
 
@@ -12,7 +13,7 @@ export interface HeaderMenuProps {
 
 export const HeaderNavigation: React.FunctionComponent<HeaderMenuProps> = ({ className, selectedKeys, routes }) => {
   return (
-    <Layout.Header className={className}>
+    <Layout.Header className={classnames('section-header', className)}>
       <Menu theme={'light'} mode={'horizontal'} selectedKeys={selectedKeys} style={{ lineHeight: '46px' }}>
         {routes
           .filter(route => route.link)

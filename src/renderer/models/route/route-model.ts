@@ -7,4 +7,5 @@ export interface RouteModel {
   link?: RouteLinkModel;
   config: RouteProps;
   routes?: Array<RouteModel>;
+  banner?: string;
 }

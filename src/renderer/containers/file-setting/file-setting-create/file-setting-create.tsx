@@ -1,5 +1,5 @@
 import * as React from 'react'
 
-export const FileSettingAdd= () => {
+export const FileSettingCreate= () => {
     return <div>Hello World</div>;
 }

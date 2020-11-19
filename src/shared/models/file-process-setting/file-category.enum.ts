@@ -1,4 +1,4 @@
-export enum FileProcessSettingType {
+export enum FileCategory {
   Excel = "EXCEL",
   Common = "COMMON"
 }

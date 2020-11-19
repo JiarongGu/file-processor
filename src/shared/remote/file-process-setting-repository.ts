@@ -1,10 +1,10 @@
 import { FileProcessSetting } from '@shared/models/file-process-setting';
-import { FileProcessSettingType } from '@shared/models/file-process-setting/file-process-setting-type.enum';
+import { FileProcessType } from '@shared/models/file-process-setting/file-process-type.enum';
 
 export interface IFileProcessSettingRepository {
-  list(type?: FileProcessSettingType): Promise<FileProcessSetting[]>;
+  list(processType?: FileProcessType): Promise<FileProcessSetting[]>;
 
-  fetch(id: string, type?: FileProcessSettingType) : Promise<FileProcessSetting>;
+  fetch(id: string, processType?: FileProcessType) : Promise<FileProcessSetting>;
 
   create(value: FileProcessSetting): Promise<FileProcessSetting>;
 

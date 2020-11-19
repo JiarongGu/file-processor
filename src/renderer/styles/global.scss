@@ -22,5 +22,10 @@ $scrollbar-color--hover:  rgb(170, 170, 180);
   position: relative;
   height: 100%;
   overflow: hidden;
-  flex-direction: row;
+  flex-direction: column;
+}
+
+:global(.section-header) {
+  height: 48px;
+  padding: 0;
 }

@@ -1,7 +1,7 @@
 import { SettingOutlined } from '@ant-design/icons';
 
 import { RouteModel } from '@models';
-import { FileSettingAdd } from './file-setting-add/file-setting-overview';
+import { FileSettingCreate } from './file-setting-create/file-setting-create';
 import { FileSettingContainer } from './file-setting-container/file-setting-container';
 import { FileSettingOverview } from './file-setting-overview/file-setting-overview';
 
@@ -20,10 +20,7 @@ export const fileSettingRoute: RouteModel = {
   routes: [
     {
       key: 'file-setting.overview',
-      link: {
-        name: 'Overview',
-        url: '/file-setting/overview'
-      },
+      banner: 'File Process Settings',
       config: {
         exact: true,
         path: '/file-setting/overview',
@@ -32,14 +29,11 @@ export const fileSettingRoute: RouteModel = {
     },
     {
       key: 'file-setting.add',
-      link: {
-        name: 'Create',
-        url: '/file-setting/add'
-      },
+      banner: 'File Process Settings - Create',
       config: {
         exact: true,
         path: '/file-setting/add',
-        component: FileSettingAdd
+        component: FileSettingCreate
       }
     }
   ]

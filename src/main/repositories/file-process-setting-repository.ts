@@ -1,22 +1,21 @@
 import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';
 
-import { FileProcessSetting } from '@shared/models/file-process-setting';
-import { FileProcessSettingType } from '@shared/models/file-process-setting/file-process-setting-type.enum';
+import { FileProcessSetting, FileProcessType } from '@shared/models/file-process-setting';
 import { IFileProcessSettingRepository } from '@shared/remote/file-process-setting-repository';
 import { dbContext } from './db-context';
 
 export class FileProcessSettingRepository implements IFileProcessSettingRepository {
-  async list(type?: FileProcessSettingType): Promise<FileProcessSetting[]> {
+  async list(process?: FileProcessType): Promise<FileProcessSetting[]> {
     const collection = await this.collection();
-    if (!type) {
+    if (!process) {
       return collection.value();
     } else {
-      return collection.filter((x) => (x as any).type === type).value();
+      return collection.filter((x) => x.process === process).value();
     }
   }
 
-  async fetch(id: string, _?: FileProcessSettingType): Promise<FileProcessSetting> {
+  async fetch(id: string, _?: FileProcessType): Promise<FileProcessSetting> {
     const collection = await this.collection();
     return collection
       .filter((x) => x.id === id)
@@ -48,6 +47,6 @@ export class FileProcessSettingRepository implements IFileProcessSettingReposito
   }
 
   private async collection() {
-    return (await dbContext()).get('file-process-setting');
+    return (await dbContext()).get('file-source-setting');
   }
 }

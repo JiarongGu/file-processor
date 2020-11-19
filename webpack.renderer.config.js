@@ -41,7 +41,6 @@ module.exports = merge.smart(baseConfig, {
               },
             } 
           },
-          '@teamsupercell/typings-for-css-modules-loader',
           {
             loader: 'css-loader',
             options: {
@@ -128,7 +127,28 @@ module.exports = merge.smart(baseConfig, {
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(appPublic, 'index.html'),
-      minify: false
+      favicon:  path.resolve(appPublic, 'favicon.ico'),
+      minify: false,
+      title: "File Processor",
+      meta: [
+        { charset: "utf-8" }, 
+        { name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no" },
+        { name: "theme-color", content: "#000000" }
+      ],
+      templateParameters: (compilation, assets, assetTags, options) => {
+        return {
+          compilation,
+          webpackConfig: compilation.options,
+          htmlWebpackPlugin: {
+            tags: assetTags,
+            files: assets,
+            options
+          },
+          live2d: `${assets.publicPath}scripts/live2d.min.js`,
+          live2dFramework: `${assets.publicPath}scripts/Live2DFramework.js`,
+          manifest: `${assets.publicPath}manifest.json`,
+        };
+      }
     }),
     new CopyWebpackPlugin({ 
       patterns: [

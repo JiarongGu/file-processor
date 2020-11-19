@@ -3,9 +3,9 @@ import { FileSettingContainer } from './file-setting-container/file-setting-cont
 import { FileSettingOverview } from './file-setting-overview/file-setting-overview';
 
 export const fileSettingRoute: RouteModel = {
-  key: 'character',
+  key: 'file-setting',
   link: {
-    name: 'Character',
+    name: 'File Setting',
     icon: 'user',
     url: '/character/icon',
   },

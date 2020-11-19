@@ -134,26 +134,12 @@ module.exports = merge.smart(baseConfig, {
         { charset: "utf-8" }, 
         { name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no" },
         { name: "theme-color", content: "#000000" }
-      ],
-      templateParameters: (compilation, assets, assetTags, options) => {
-        return {
-          compilation,
-          webpackConfig: compilation.options,
-          htmlWebpackPlugin: {
-            tags: assetTags,
-            files: assets,
-            options
-          },
-          live2d: `${assets.publicPath}scripts/live2d.min.js`,
-          live2dFramework: `${assets.publicPath}scripts/Live2DFramework.js`,
-          manifest: `${assets.publicPath}manifest.json`,
-        };
-      }
+      ]
     }),
-    new CopyWebpackPlugin({ 
-      patterns: [
-        { from: appPublic, to: appOutput, globOptions: { ignore: ['index.html'] } }
-      ]}),
+    // new CopyWebpackPlugin({ 
+    //   patterns: [
+    //     { from: appPublic, to: appOutput, globOptions: { ignore: ['index.html'] } }
+    //   ]}),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
     })

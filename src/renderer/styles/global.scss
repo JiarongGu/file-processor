@@ -16,3 +16,11 @@ $scrollbar-color--hover:  rgb(170, 170, 180);
     background-color: $scrollbar-color--hover;
   }
 }
+
+:global(.section-container) {
+  display: flex;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  flex-direction: row;
+}

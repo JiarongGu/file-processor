@@ -1,5 +1,5 @@
 export interface RouteLinkModel {
   url: string;
   name?: string;
-  icon?: string;
+  icon?: React.ComponentType<any>;
 }

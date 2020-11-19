@@ -1,1 +1,0 @@
-export * from './character-viewer-sider-variants';

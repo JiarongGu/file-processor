@@ -1,7 +1,6 @@
 import { ipcMain, IpcMainInvokeEvent } from 'electron';
 
 import { RemoteServiceType } from '@shared/remote';
-import { IconRepository, CharacterRepository, RenderRepository, Live2DRepository, ThemeRepository } from './repositories';
 import { FileService } from './services';
 
 const createEventHandler = (service) => async (event: IpcMainInvokeEvent, method, args) => {

@@ -1,5 +1,12 @@
-import * as React from 'react'
+
+import * as React from 'react';
+
+import { Table } from 'antd';
 
 export const FileSettingOverview = () => {
-    return <div>Hello World</div>;
-}
+  return (
+    <div className={'section-container'}>
+      <Table></Table>
+    </div>
+  );
+};

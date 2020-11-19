@@ -23,7 +23,7 @@ export const AppNavigation: React.FunctionComponent = () => {
             return (
               <Menu.Item key={route.key} title={name}>
                 <Link to={link.url}>
-                  {link.icon && <Icon type={link.icon} />}
+                  {link.icon && <link.icon />}
                   {!collapsed && name}
                 </Link>
               </Menu.Item>

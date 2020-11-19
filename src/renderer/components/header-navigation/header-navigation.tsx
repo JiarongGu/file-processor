@@ -13,7 +13,7 @@ export interface HeaderMenuProps {
 export const HeaderNavigation: React.FunctionComponent<HeaderMenuProps> = ({ className, selectedKeys, routes }) => {
   return (
     <Layout.Header className={className}>
-      <Menu theme={'light'} mode={'horizontal'} selectedKeys={selectedKeys}>
+      <Menu theme={'light'} mode={'horizontal'} selectedKeys={selectedKeys} style={{ lineHeight: '46px' }}>
         {routes
           .filter(route => route.link)
           .map(route => (

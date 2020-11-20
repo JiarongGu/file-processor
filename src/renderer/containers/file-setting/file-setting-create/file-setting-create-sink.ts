@@ -1,3 +1,4 @@
+import { ExcelService } from '@services/excel/ExcelService';
 import { ExcelSheetSourceSetting } from '@shared/models/file-process-setting';
 import { runAsync } from '@shared/utils/runAsync';
 import { effect, sink, state, trigger } from 'react-redux-sink';
@@ -18,6 +19,9 @@ export class FileSettingCreateSink {
 
   @state
   excelSheetSourceSettings: { [key: string]: ExcelSheetSourceSetting } = {};
+
+  @state
+  excelService: ExcelService = new ExcelService();
 
   clearFile() {
     this.filePath = undefined;

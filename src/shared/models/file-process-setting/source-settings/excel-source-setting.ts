@@ -7,6 +7,7 @@ export interface ExcelSourceSetting {
   process: FileProcessType.Source;
   category: FileCategory.Excel;
   sheets: ExcelSheetSourceSetting[];
+  outputs: string[];
 }
 
 export interface ExcelSheetSourceSetting {
@@ -17,6 +18,7 @@ export interface ExcelSheetSourceSetting {
 export interface ExcelFieldSourceSetting {
   id: string;
   name: string;
+  output: string;
   converter: {
     order?: number;
     match?: string;

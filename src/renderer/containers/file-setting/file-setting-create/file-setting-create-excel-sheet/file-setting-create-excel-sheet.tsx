@@ -17,7 +17,14 @@ export const FileSettingCreateExcelSheet: React.FC<FileSettingCreateExcelSheetPr
   const [selectedSheet, setSelectedSheet] = React.useState();
 
   const menu = React.useMemo(() => {
-    const onClick = (name) => () => setSelectedSheet(name);
+    const onClick = (name) => () => {
+      setSelectedSheet(name);
+      const sheet = sink.excel?.Sheets[name];
+      if (sheet) {
+        console.log(sink.excelService.readRow(sheet, 1));
+      }
+    };
+
     return (
       <Menu>
         {sink.excel?.SheetNames.map((name) => (

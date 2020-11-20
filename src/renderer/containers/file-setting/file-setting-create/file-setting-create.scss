@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.input-group {
+  display: flex;
+  margin: 0 -4px;
+}
+
+.input-field {
+  margin: 0 4px;
+}

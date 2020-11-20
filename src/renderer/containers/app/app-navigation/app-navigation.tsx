@@ -14,10 +14,10 @@ export const AppNavigation: React.FunctionComponent = () => {
 
   return (
     <Layout.Sider collapsible={true} collapsed={collapsed} onCollapse={onCollapse}>
-      <Menu theme={'dark'} mode={'inline'} selectedKeys={routeKeys}>
+      <Menu theme={'dark'} mode={'inline'} selectedKeys={routeKeys} style={{ marginLeft: '-1px' }}>
         {navigation.routes
-          .filter(route => route.link)
-          .map(route => {
+          .filter((route) => route.link)
+          .map((route) => {
             const link = route.link!;
             const name = link.name || route.key;
             return (

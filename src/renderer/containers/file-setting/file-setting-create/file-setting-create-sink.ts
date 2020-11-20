@@ -1,6 +1,6 @@
 import { ExcelSheetSourceSetting } from '@shared/models/file-process-setting';
 import { runAsync } from '@shared/utils/runAsync';
-import { sink, state, trigger } from 'react-redux-sink';
+import { effect, sink, state, trigger } from 'react-redux-sink';
 import * as XLSX from 'xlsx';
 
 const xlsx = /([a-zA-Z0-9\s_\\.\-\(\):])+(.xlsx)$/;
@@ -30,9 +30,24 @@ export class FileSettingCreateSink {
     if (xlsx.test(filePath)) {
       this.fileType = 'excel';
       this.excel = await runAsync(() => XLSX.readFile(filePath));
+      this.addExcelSheetSetting();
       console.log(this.excel);
     } else {
       this.clearFile();
     }
+  }
+
+  @effect
+  addExcelSheetSetting() {
+    const id = Date.now().toString(36);
+    const setting: ExcelSheetSourceSetting = { fields: [] };
+    this.excelSheetSourceSettings = { ...this.excelSheetSourceSettings, [id]: setting };
+    return id;
+  }
+
+  @effect
+  removeExcelSheetSetting(id: string) {
+    delete this.excelSheetSourceSettings[id];
+    this.excelSheetSourceSettings = { ...this.excelSheetSourceSettings };
   }
 }

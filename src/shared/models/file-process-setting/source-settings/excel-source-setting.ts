@@ -10,7 +10,7 @@ export interface ExcelSourceSetting {
 }
 
 export interface ExcelSheetSourceSetting {
-  name: string;
+  name?: string;
   fields: ExcelFieldSourceSetting[];
 }
 
@@ -21,5 +21,5 @@ export interface ExcelFieldSourceSetting {
     order?: number;
     match?: string;
     convert: string;
-  }
+  };
 }

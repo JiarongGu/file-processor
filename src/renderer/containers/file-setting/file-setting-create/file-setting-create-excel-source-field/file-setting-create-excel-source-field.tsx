@@ -7,7 +7,7 @@ import * as styles from './file-setting-create-excel-source-field.scss';
 import { ExcelFieldConvertType, ExcelFieldSourceSetting } from '@shared/models/file-process-setting';
 
 interface FileSettingCreateExcelSourceFieldProps {
-  fields: string[];
+  fields: Array<string>;
   className?: string;
   setting: ExcelFieldSourceSetting;
 }
@@ -39,7 +39,7 @@ export const FileSettingCreateExcelSourceField: React.FC<FileSettingCreateExcelS
             className={styles.fieldSelection}
             placeholder={'Output Field'}
             onChange={(event) => (setting.output = event.target.value)}
-          ></Input>
+          />
         </div>
       </div>
       <div className={styles.convertProcess}>

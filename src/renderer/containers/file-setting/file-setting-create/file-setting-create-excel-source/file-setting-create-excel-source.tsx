@@ -28,7 +28,7 @@ export const FileSettingCreateExcelSource: React.FC<FileSettingCreateExcelSheetP
   const [sheetName, setSheetName] = React.useState<string>();
   const [workSheet, setWorkSheet] = React.useState<XLSX.WorkSheet>();
   const [testModel, setTestModel] = React.useState(false);
-  const [fields, setFields] = React.useState<string[]>();
+  const [fields, setFields] = React.useState<Array<string>>();
   const [fieldSettings, setFieldSettings] = React.useState<{ [key: string]: ExcelFieldSourceSetting }>({});
 
   React.useEffect(() => {
@@ -75,9 +75,9 @@ export const FileSettingCreateExcelSource: React.FC<FileSettingCreateExcelSheetP
       <div className={styles.processSelection}>
         <div className={styles.inputGroup}>
           <div className={classnames(styles.inputGroup, styles.inputName)}>
-            <Input placeholder="Name of setting" onChange={onNameChange}></Input>
+            <Input placeholder={'Name of setting'} onChange={onNameChange} />
           </div>
-          <Select placeholder="Select a sheet" onChange={(value: string) => setSheetName(value)}>
+          <Select placeholder={'Select a sheet'} onChange={(value: string) => setSheetName(value)}>
             {sink.excel?.SheetNames.map((name) => (
               <Select.Option value={name} key={name}>
                 {name}
@@ -86,7 +86,9 @@ export const FileSettingCreateExcelSource: React.FC<FileSettingCreateExcelSheetP
           </Select>
         </div>
         <div className={styles.buttonGroup}>
-          <Button onClick={() => setTestModel(true)}>Test</Button>
+          <Button className={styles.button} onClick={() => setTestModel(true)} disabled={!workSheet}>
+            Test
+          </Button>
           <Modal
             visible={testModel}
             onCancel={() => setTestModel(false)}
@@ -96,16 +98,18 @@ export const FileSettingCreateExcelSource: React.FC<FileSettingCreateExcelSheetP
                 Cancel
               </Button>,
             ]}
-            centered
+            centered={true}
             width={'100vw'}
           >
             {workSheet && (
               <FileSettingCreateExcelSourceTest settings={Object.values(fieldSettings)} workSheet={workSheet} />
             )}
           </Modal>
-          <Button type={'primary'}>Save</Button>
+          <Button className={styles.button} type={'primary'}>
+            Save
+          </Button>
           <Popconfirm title={'Delete Settings?'} onConfirm={() => sink.deleteExcelSourceSetting(id)}>
-            <Button type={'primary'} danger>
+            <Button className={styles.button} type={'primary'} danger={true}>
               Delete
             </Button>
           </Popconfirm>

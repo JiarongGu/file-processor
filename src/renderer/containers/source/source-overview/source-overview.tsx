@@ -4,14 +4,14 @@ import { Button, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import * as classnames from 'classnames';
 
-import * as styles from './file-setting-overview.scss';
+import * as styles from './source-overview.scss';
 import { RouteComponentProps } from 'react-router';
 
 const columns: ColumnsType<any> = [{ title: 'Name', dataIndex: 'name' }];
 
-export const FileSettingOverview = (props: RouteComponentProps) => {
+export const SourceOverview = (props: RouteComponentProps) => {
   const create = React.useCallback(() => {
-    props.history.push('/file-setting/add');
+    props.history.push('/source/create');
   }, []);
 
   return (

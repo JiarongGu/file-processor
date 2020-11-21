@@ -3,21 +3,17 @@ import { Input, Select } from 'antd';
 import * as React from 'react';
 import * as classnames from 'classnames';
 
-import * as styles from './file-setting-create-excel-source-field.scss';
-import { ExcelFieldConvertType, ExcelFieldSourceSetting } from '@shared/models/file-process-setting';
+import * as styles from './excel-source-create-field.scss';
+import { ExcelFieldConvertorType, ExcelSourceField } from '@shared/models/source/excel-source';
 
-interface FileSettingCreateExcelSourceFieldProps {
+interface ExcelSourceCreateFieldProps {
   fields: Array<string>;
   className?: string;
-  setting: ExcelFieldSourceSetting;
+  setting: ExcelSourceField;
 }
 
-export const FileSettingCreateExcelSourceField: React.FC<FileSettingCreateExcelSourceFieldProps> = ({
-  fields,
-  className,
-  setting,
-}) => {
-  const [converterType, setConvertorType] = React.useState(ExcelFieldConvertType.None);
+export const ExcelSourceCreateField: React.FC<ExcelSourceCreateFieldProps> = ({ fields, className, setting }) => {
+  const [converterType, setConvertorType] = React.useState(ExcelFieldConvertorType.None);
 
   const onConverterTypeChange = React.useCallback(
     (value) => {
@@ -55,18 +51,12 @@ export const FileSettingCreateExcelSourceField: React.FC<FileSettingCreateExcelS
       <div className={styles.convertProcess}>
         <div>
           <Select defaultValue={converterType} onChange={onConverterTypeChange}>
-            <Select.Option key={ExcelFieldConvertType.None} value={ExcelFieldConvertType.None}>
-              None
-            </Select.Option>
-            <Select.Option key={ExcelFieldConvertType.Regex} value={ExcelFieldConvertType.Regex}>
-              Regex
-            </Select.Option>
-            <Select.Option key={ExcelFieldConvertType.Script} value={ExcelFieldConvertType.Script}>
-              Script
-            </Select.Option>
+            <Select.Option value={ExcelFieldConvertorType.None}>None</Select.Option>
+            <Select.Option value={ExcelFieldConvertorType.Regex}>Regex</Select.Option>
+            <Select.Option value={ExcelFieldConvertorType.Script}>Script</Select.Option>
           </Select>
         </div>
-        {converterType === ExcelFieldConvertType.Script && (
+        {converterType === ExcelFieldConvertorType.Script && (
           <Input.TextArea
             className={styles.convertScript}
             onChange={(event) => {

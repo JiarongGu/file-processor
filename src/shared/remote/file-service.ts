@@ -1,5 +1,5 @@
-import { FileReadType } from '@shared/models';
+import { FileType } from '@shared/models';
 
 export interface IFileService {
-  read(filePath: string, type: FileReadType): Promise<any>;
+  read(filePath: string, type: FileType): Promise<any>;
 }

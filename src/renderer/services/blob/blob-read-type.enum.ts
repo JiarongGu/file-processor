@@ -1,9 +1,9 @@
-import { FileReadType } from '@shared/models';
+import { FileType } from '@shared/models';
 
 enum BlobReadTypeBase {
   Base64 = 'base64',
-  URL= 'url',
+  URL = 'url',
 }
 
-export type BlobReadType = FileReadType | BlobReadTypeBase;
-export const BlobReadType = { ...BlobReadTypeBase, ...FileReadType };
+export type BlobReadType = FileType | BlobReadTypeBase;
+export const BlobReadType = { ...BlobReadTypeBase, ...FileType };

@@ -37,6 +37,7 @@
     "startbt",
     "tslib",
     "tspaths",
+    "tsyringe",
     "typechecking",
     "webdriverio",
     "webm",

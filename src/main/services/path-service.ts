@@ -1,16 +1,14 @@
 import * as path from 'path';
 
 import { EnvironmentService } from '@shared/services';
+import { singleton } from 'tsyringe';
 
+@singleton()
 export class PathService {
-  private _environmentService: EnvironmentService;
-
-  constructor() {
-    this._environmentService = new EnvironmentService();
-  }
+  constructor(private environmentService: EnvironmentService) {}
 
   public get resourcesPath() {
-    if (this._environmentService.isDevelopment) {
+    if (this.environmentService.isDevelopment) {
       return process.env.APP_RESOURCES as string;
     }
     return process.resourcesPath;

@@ -2,31 +2,29 @@ import * as React from 'react';
 import { useSink } from 'react-redux-sink';
 import * as XLSX from 'xlsx';
 
-import { FileSettingCreateSink } from '../file-setting-create-sink';
-import { ExcelFieldSourceSetting } from '@shared/models/file-process-setting';
+import { SourceCreateSink } from '../source-create-sink';
 import { Button, InputNumber, Table } from 'antd';
 
-import * as styles from './file-setting-create-excel-source-test.scss';
-export interface FileSettingCreateExcelSourceTestProps {
-  settings: Array<ExcelFieldSourceSetting>;
+import * as styles from './excel-source-create-test.scss';
+import { ExcelSourceField } from '@shared/models/source/excel-source';
+
+export interface ExcelSourceCreateTestProps {
+  settings: Array<ExcelSourceField>;
   workSheet: XLSX.WorkSheet;
 }
 
-export const FileSettingCreateExcelSourceTest: React.FC<FileSettingCreateExcelSourceTestProps> = ({
-  settings,
-  workSheet,
-}) => {
-  const sink = useSink(FileSettingCreateSink, (state) => [state.excelService, state.excelProcessService]);
+export const ExcelSourceCreateTest: React.FC<ExcelSourceCreateTestProps> = ({ settings, workSheet }) => {
+  const sink = useSink(SourceCreateSink, (state) => [state.excelService, state.excelProcessService]);
   const rowCount = sink.excelService.countRow(workSheet);
 
   const [fields, setFields] = React.useState<Array<{ [key: string]: string }>>([]);
-  const [rowFrom, setRowFrom] = React.useState(2);
-  const [rowTo, setRowTo] = React.useState(rowCount);
+  const [from, setRowFrom] = React.useState(2);
+  const [to, setRowTo] = React.useState(rowCount);
 
   const onProcessClick = React.useCallback(() => {
-    const outputs = sink.excelProcessService.processSourceOutput(workSheet, settings, rowFrom, rowTo);
+    const outputs = sink.excelProcessService.process(settings, { sheet: workSheet, from, to });
     setFields(outputs);
-  }, [rowFrom, rowTo]);
+  }, [from, to]);
 
   const columns = settings
     .filter((x) => x.output || x.name)
@@ -43,7 +41,7 @@ export const FileSettingCreateExcelSourceTest: React.FC<FileSettingCreateExcelSo
           <InputNumber
             min={2}
             max={rowCount}
-            defaultValue={rowFrom}
+            defaultValue={from}
             onChange={(value) => {
               value && setRowFrom(parseInt(value as any, 10));
             }}
@@ -52,7 +50,7 @@ export const FileSettingCreateExcelSourceTest: React.FC<FileSettingCreateExcelSo
         <div>
           To:{' '}
           <InputNumber
-            min={rowFrom}
+            min={to}
             max={rowCount}
             defaultValue={rowCount}
             onChange={(value) => {

@@ -1,6 +1,6 @@
 import { MemorizeContext, memorizeAsync } from 'ts-memorize-decorator';
 
-import { FileReadType} from '@shared';
+import { FileType } from '@shared';
 import { RemoteService, IFileService, RemoteServiceType } from '@shared/remote';
 import { BlobReadType } from './blob-read-type.enum';
 
@@ -14,7 +14,7 @@ export class BlobService {
     const fileReadType = this.toFileType(type);
     const result = await this._fileService.invoke('read', filePath, fileReadType);
 
-    if (fileReadType !== FileReadType.ByteArray) {
+    if (fileReadType !== FileType.ByteArray) {
       return result;
     }
 
@@ -37,14 +37,14 @@ export class BlobService {
     return result;
   }
 
-  private toFileType(readType: BlobReadType): FileReadType {
+  private toFileType(readType: BlobReadType): FileType {
     switch (readType) {
       case BlobReadType.URL:
       case BlobReadType.ByteArray:
       case BlobReadType.Base64:
-        return FileReadType.ByteArray;
+        return FileType.ByteArray;
       default:
-        return readType as FileReadType;
+        return readType as FileType;
     }
   }
 
@@ -53,7 +53,7 @@ export class BlobService {
       const reader = new FileReader();
       reader.readAsArrayBuffer(file);
       reader.onload = () => resolve(reader.result as ArrayBuffer);
-      reader.onerror = error => reject(error);
+      reader.onerror = (error) => reject(error);
     });
   }
 
@@ -62,7 +62,7 @@ export class BlobService {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => resolve(reader.result as string);
-      reader.onerror = error => reject(error);
+      reader.onerror = (error) => reject(error);
     });
   }
 }

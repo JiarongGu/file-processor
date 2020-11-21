@@ -1,13 +1,14 @@
-import { app, BrowserWindow } from 'electron';
+import 'reflect-metadata';
 
+import { app, BrowserWindow } from 'electron';
 import { createRenderer } from './create-renderer';
 import { createIpc } from './create-ipc';
 
 let renderer: BrowserWindow | null;
 
 const createWindow = createRenderer(
-  win => renderer = win, 
-  () => renderer = null
+  (win) => (renderer = win),
+  () => (renderer = null)
 );
 
 createIpc();

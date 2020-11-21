@@ -1,35 +1,36 @@
-
 import * as fs from 'fs-extra';
+import { delay, inject, injectable } from 'tsyringe';
 
-import { FileReadType } from '@shared/models';
+import { FileType } from '@shared/models';
 import { IFileService } from '@shared/remote';
 import { PathService } from '@main/services';
 
+@injectable()
 export class FileService implements IFileService {
-  public _pathService: PathService;
+  constructor(@inject(delay(() => PathService)) private pathService: PathService) {}
 
-  constructor() {
-    this._pathService = new PathService();
-  }
-
-  public async get<T>(filePath: string, type: FileReadType.Json): Promise<T>;
-  public async get(filePath: string, type: FileReadType.ByteArray): Promise<ArrayBuffer>;
-  public async get(filePath: string, type: FileReadType.Text): Promise<string>;
-  public async get(filePath: string, type: FileReadType): Promise<any>;
-  public async get(filePath: string, type: FileReadType) {
-    if (type === FileReadType.Json) {
+  public async get<T>(filePath: string, type: FileType.Json): Promise<T>;
+  public async get(filePath: string, type: FileType.ByteArray): Promise<ArrayBuffer>;
+  public async get(filePath: string, type: FileType.Text): Promise<string>;
+  public async get(filePath: string, type: FileType): Promise<any>;
+  public async get(filePath: string, type: FileType) {
+    if (type === FileType.Json) {
       return await fs.readJSON(filePath);
     }
     const file = await fs.readFile(filePath);
 
-    if (type === FileReadType.Text) {
+    if (type === FileType.Text) {
       return file.toString('utf-8');
     }
 
     return Uint8Array.from(file);
   }
 
-  public read(filePath: string, type: FileReadType) {
-    return this.get(this._pathService.getResourcePath(filePath), type);
+  public read(filePath: string, type: FileType) {
+    return this.get(this.pathService.getResourcePath(filePath), type);
+  }
+
+  public async write(filePath: string, text: string) {
+    await fs.writeFile(this.pathService.getResourcePath(filePath), text);
   }
 }

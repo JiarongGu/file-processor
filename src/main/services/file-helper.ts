@@ -4,10 +4,10 @@ import * as path from 'path';
 import { reduceMapAsync } from '@shared/utils';
 
 export type FileStats = {
-  path: string,
+  path: string;
   isDirectory: boolean;
-  files?: FileStatsCollection
-}
+  files?: FileStatsCollection;
+};
 export type FileStatsCollection = { [key: string]: FileStats };
 
 export class FileHelper {
@@ -19,7 +19,7 @@ export class FileHelper {
         } else {
           resolve(stats.isDirectory());
         }
-      })
+      });
     });
   }
 
@@ -29,7 +29,7 @@ export class FileHelper {
         if (err) {
           reject(err);
         } else {
-          resolve(files.map(file => path.join(filePath, file)));
+          resolve(files.map((file) => path.join(filePath, file)));
         }
       });
     });
@@ -39,7 +39,7 @@ export class FileHelper {
     return new Promise((resolve) => {
       fs.exists(filePath, (exists) => {
         resolve(exists);
-      })
+      });
     });
   }
 
@@ -54,9 +54,10 @@ export class FileHelper {
   }
 
   public static async readDirectoryDeep(filePath: string): Promise<FileStatsCollection> {
-    return await reduceMapAsync<string, FileStats>(await this.readDirectory(filePath),
-      suhPath => this.getFileName(suhPath),
-      async subPath => {
+    return await reduceMapAsync<string, FileStats>(
+      await this.readDirectory(filePath),
+      (suhPath) => this.getFileName(suhPath),
+      async (subPath) => {
         const isDirectory = await this.isDirectory(subPath);
         const fileStats: FileStats = { isDirectory, path: subPath };
         if (isDirectory) {

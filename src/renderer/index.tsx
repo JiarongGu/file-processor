@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -6,7 +8,7 @@ import { SinkFactory } from 'react-redux-sink';
 import { Router } from 'react-router';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { App, fileSettingRoute } from '@containers';
+import { App, sourceRoute } from '@containers';
 import { WindowSink, NavigationSink } from '@sinks';
 
 import 'antd/dist/antd.css';
@@ -14,13 +16,13 @@ import '@styles/global.scss';
 
 const store = SinkFactory.createStore({
   useTrigger: true,
-  devToolOptions: { devToolCompose: composeWithDevTools }
+  devToolOptions: { devToolCompose: composeWithDevTools },
 });
 
 // initialize sinks
 WindowSink.load(window);
 
-const history = NavigationSink.createHistory([ fileSettingRoute ]);
+const history = NavigationSink.createHistory([sourceRoute]);
 
 ReactDOM.render(
   <AppContainer>

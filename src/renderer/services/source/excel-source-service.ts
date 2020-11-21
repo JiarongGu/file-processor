@@ -1,26 +1,27 @@
-import { ExcelFieldConvertType, ExcelFieldSourceSetting } from '@shared/models/file-process-setting';
-import * as XLSX from 'xlsx';
-import { ExcelService } from './excel-service';
+import { injectable } from 'tsyringe';
 
-export class ExcelProcessService {
-  excelService = new ExcelService();
+import { ExcelFieldConvertorType, ExcelSourceField } from '@shared/models/source/excel-source';
+import { ExcelService } from '../excel/excel-service';
+import { ExcelProcessOption } from './excel-process-options';
 
-  processSourceOutput(
-    workSheet: XLSX.WorkSheet,
-    settings: Array<ExcelFieldSourceSetting>,
-    rowFrom: number,
-    rowTo: number
-  ) {
+@injectable()
+export class ExcelSourceService {
+  constructor(private excelService: ExcelService) {}
+
+  process(settings: Array<ExcelSourceField>, options: ExcelProcessOption) {
     const metadata = this.excelService
-      .readRow(workSheet, 1)
+      .readRow(options.sheet, 1)
       .reduce((p, c, i) => ((p[c] = i), p), {} as { [key: string]: number });
-    const rowCount = this.excelService.countRow(workSheet);
-    const maxRow = rowTo < rowCount ? rowTo : rowCount;
+
+    const rowCount = this.excelService.countRow(options.sheet);
+    const rowFrom = options.from ?? 2;
+    const rowTo = options.to < rowCount ? options.to : rowCount ?? rowCount;
+
     const processed: Array<{ [key: string]: string }> = [];
     const errors: Array<string> = [];
 
-    for (let i = rowFrom; i <= maxRow; i++) {
-      const row = this.excelService.readRow(workSheet, i);
+    for (let i = rowFrom; i <= rowTo; i++) {
+      const row = this.excelService.readRow(options.sheet, i);
       const output: { [key: string]: string } = {};
       for (const setting of settings) {
         if (setting.name) {
@@ -28,9 +29,9 @@ export class ExcelProcessService {
           const outputName = setting.output ?? setting.name;
 
           switch (setting.converter.type) {
-            case ExcelFieldConvertType.None:
+            case ExcelFieldConvertorType.None:
               output[outputName] = value;
-            case ExcelFieldConvertType.Script:
+            case ExcelFieldConvertorType.Script:
               if (setting.converter.value) {
                 // tslint:disable-next-line: no-function-constructor-with-string-args
                 const scriptConvertor = new Function(`return ${setting.converter.value}`);

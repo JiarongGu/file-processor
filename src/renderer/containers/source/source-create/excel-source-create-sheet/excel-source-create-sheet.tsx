@@ -2,34 +2,35 @@ import * as React from 'react';
 import * as XLSX from 'xlsx';
 import * as classnames from 'classnames';
 import { useSink } from 'react-redux-sink';
-import { FileSettingCreateSink } from '../file-setting-create-sink';
+import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Input, Modal, Popconfirm, Select } from 'antd';
 
-import * as styles from './file-setting-create-excel-source.scss';
-import { FileSettingCreateExcelSourceField } from '../file-setting-create-excel-source-field/file-setting-create-excel-source-field';
-import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { generateId } from '@shared';
-import { ExcelFieldConvertType, ExcelFieldSourceSetting } from '@shared/models/file-process-setting';
-import { FileSettingCreateExcelSourceTest } from '../file-setting-create-excel-source-test/file-setting-create-excel-source-test';
+import { SourceCreateSink } from '../source-create-sink';
 
-export interface FileSettingCreateExcelSheetProps {
+import * as styles from './excel-source-create-sheet.scss';
+import { ExcelSourceCreateTest } from '../excel-source-create-test/excel-source-create-test';
+import { ExcelSourceCreateField } from '../excel-source-create-field/excel-source-create-field';
+import { ExcelFieldConvertorType, ExcelSourceField } from '@shared/models/source/excel-source';
+
+export interface ExcelSourceCreateSheetProps {
   className?: string;
   id: string;
 }
 
 const defaultFieldSetting = () => ({
-  converter: { type: ExcelFieldConvertType.None },
+  converter: { type: ExcelFieldConvertorType.None },
 });
 
-export const FileSettingCreateExcelSource: React.FC<FileSettingCreateExcelSheetProps> = ({ id, className }) => {
-  const sink = useSink(FileSettingCreateSink, (state) => [state.excel, state.excelSourceSettings]);
-  const setting = sink.excelSourceSettings[id];
+export const ExcelSourceCreateSheet: React.FC<ExcelSourceCreateSheetProps> = ({ id, className }) => {
+  const sink = useSink(SourceCreateSink, (state) => [state.excel, state.sources]);
+  const setting = sink.sources[id];
 
   const [sheetName, setSheetName] = React.useState<string>();
   const [workSheet, setWorkSheet] = React.useState<XLSX.WorkSheet>();
   const [testModel, setTestModel] = React.useState(false);
   const [fields, setFields] = React.useState<Array<string>>();
-  const [fieldSettings, setFieldSettings] = React.useState<{ [key: string]: ExcelFieldSourceSetting }>({});
+  const [fieldSettings, setFieldSettings] = React.useState<{ [key: string]: ExcelSourceField }>({});
 
   React.useEffect(() => {
     if (sink.excel && sheetName) {
@@ -101,14 +102,12 @@ export const FileSettingCreateExcelSource: React.FC<FileSettingCreateExcelSheetP
             centered={true}
             width={'100vw'}
           >
-            {workSheet && (
-              <FileSettingCreateExcelSourceTest settings={Object.values(fieldSettings)} workSheet={workSheet} />
-            )}
+            {workSheet && <ExcelSourceCreateTest settings={Object.values(fieldSettings)} workSheet={workSheet} />}
           </Modal>
           <Button className={styles.button} type={'primary'}>
             Save
           </Button>
-          <Popconfirm title={'Delete Settings?'} onConfirm={() => sink.deleteExcelSourceSetting(id)}>
+          <Popconfirm title={'Delete Settings?'} onConfirm={() => sink.deleteSource(id)}>
             <Button className={styles.button} type={'primary'} danger={true}>
               Delete
             </Button>
@@ -122,7 +121,7 @@ export const FileSettingCreateExcelSource: React.FC<FileSettingCreateExcelSheetP
               <Button onClick={() => onDeleteFieldClicked(key)} type={'text'} danger={true}>
                 <CloseOutlined />
               </Button>
-              <FileSettingCreateExcelSourceField setting={fieldSettings[key]} fields={fields} />
+              <ExcelSourceCreateField setting={fieldSettings[key]} fields={fields} />
             </div>
           ))}
           <div className={styles.fieldButton}>

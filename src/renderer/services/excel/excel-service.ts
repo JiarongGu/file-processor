@@ -1,4 +1,6 @@
+import { runAsync } from '@shared/utils/runAsync';
 import * as _ from 'lodash';
+import { injectable } from 'tsyringe';
 import * as XLSX from 'xlsx';
 
 const NUMBER_CHAR = Array.apply(null, Array(26)).map((_, i) => String.fromCharCode(65 + i));
@@ -50,7 +52,12 @@ const parseColumnChar = (number: number) => {
     .join('');
 };
 
+@injectable()
 export class ExcelService {
+  async read(filePath: string) {
+    return await runAsync(() => XLSX.readFile(filePath));
+  }
+
   readRow(sheet: XLSX.WorkSheet, row: number, columns?: number) {
     if (!columns) columns = this.countColumn(sheet);
     const result: Array<string> = [];

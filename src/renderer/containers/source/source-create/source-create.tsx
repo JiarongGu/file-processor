@@ -3,13 +3,13 @@ import { Tag, Typography } from 'antd';
 import { useSink } from 'react-redux-sink';
 
 import { FileSelect } from '@components/file-select/file-select';
-import { FileSettingCreateSink } from './file-setting-create-sink';
+import { SourceCreateSink } from './source-create-sink';
 
-import * as styles from './file-setting-create.scss';
-import { FileSettingCreateExcel } from './file-setting-create-excel/file-setting-create-excel';
+import * as styles from './source-create.scss';
+import { ExcelSourceCreate } from './excel-source-create/excel-source-create';
 
-export const FileSettingCreate = () => {
-  const sink = useSink(FileSettingCreateSink);
+export const SourceCreate = () => {
+  const sink = useSink(SourceCreateSink);
 
   const onFileSelect = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const files = (event.target as any).files;
@@ -31,7 +31,7 @@ export const FileSettingCreate = () => {
           <Typography.Text className={styles.inputField}>{sink.filePath}</Typography.Text>
         </div>
       </div>
-      {sink.filePath && <div className={styles.configSection}>{sink.excel && <FileSettingCreateExcel />}</div>}
+      {sink.filePath && <div className={styles.configSection}>{sink.excel && <ExcelSourceCreate />}</div>}
     </div>
   );
 };

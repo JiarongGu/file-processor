@@ -161,6 +161,7 @@
     "react-window": "^1.8.6",
     "redux": "^4.0.5",
     "ts-memorize-decorator": "0.0.1",
+    "tsyringe": "^4.4.0",
     "xlsx": "^0.16.9"
   }
 }

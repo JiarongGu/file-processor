@@ -1,8 +1,11 @@
+import { singleton } from 'tsyringe';
+
 export enum Environment {
   Development = 'development',
-  Production = 'production'
+  Production = 'production',
 }
 
+@singleton()
 export class EnvironmentService {
   public environment: Environment;
 

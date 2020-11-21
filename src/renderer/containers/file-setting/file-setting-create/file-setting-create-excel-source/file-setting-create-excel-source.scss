@@ -19,6 +19,20 @@
   margin-right: 16px;
 }
 
+.button-group {
+  display: flex;
+
+  > :not(:last-child) {
+    margin-right: 8px;
+  }
+}
+
 .field {
   margin-top: 16px;
+  padding: 8px;
+  display: flex;
+}
+
+.field-button {
+  padding: 8px 24px;
 }

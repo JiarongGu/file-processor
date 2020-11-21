@@ -1,4 +1,5 @@
-import { ExcelService } from '@services/excel/ExcelService';
+import { ExcelProcessService } from '@services/excel/excel-process-service';
+import { ExcelService } from '@services/excel/excel-service';
 import { generateId } from '@shared';
 import { ExcelSourceSetting, FileCategory, FileProcessType } from '@shared/models/file-process-setting';
 import { runAsync } from '@shared/utils/runAsync';
@@ -23,6 +24,9 @@ export class FileSettingCreateSink {
 
   @state
   excelService: ExcelService = new ExcelService();
+
+  @state
+  excelProcessService: ExcelProcessService = new ExcelProcessService();
 
   clearFile() {
     this.filePath = undefined;

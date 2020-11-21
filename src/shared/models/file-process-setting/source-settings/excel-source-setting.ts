@@ -18,8 +18,8 @@ export enum ExcelFieldConvertType {
 }
 
 export interface ExcelFieldSourceSetting {
-  name: string;
-  output: string;
+  name?: string;
+  output?: string;
   converter: {
     type: ExcelFieldConvertType;
     value?: string;

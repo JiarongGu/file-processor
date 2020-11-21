@@ -15,12 +15,17 @@ interface FileSettingCreateExcelSourceFieldProps {
 export const FileSettingCreateExcelSourceField: React.FC<FileSettingCreateExcelSourceFieldProps> = ({
   fields,
   className,
+  setting,
 }) => {
   return (
     <div className={classnames(styles.container, className)}>
       <div className={styles.fieldProcess}>
         <div>
-          <Select className={styles.fieldSelection} placeholder={'Select Input Field'}>
+          <Select
+            className={styles.fieldSelection}
+            placeholder={'Select Input Field'}
+            onChange={(value: string) => (setting.name = value)}
+          >
             {fields.map((field) => (
               <Select.Option key={field} value={field}>
                 {field}
@@ -30,7 +35,11 @@ export const FileSettingCreateExcelSourceField: React.FC<FileSettingCreateExcelS
         </div>
         <RightOutlined />
         <div>
-          <Input className={styles.fieldSelection} placeholder={'Output Field'}></Input>
+          <Input
+            className={styles.fieldSelection}
+            placeholder={'Output Field'}
+            onChange={(event) => (setting.output = event.target.value)}
+          ></Input>
         </div>
       </div>
       <div className={styles.convertProcess}>

@@ -39,7 +39,8 @@ export class FileSettingCreateSink {
     if (xlsx.test(filePath)) {
       this.fileType = 'excel';
       this.excel = await runAsync(() => XLSX.readFile(filePath));
-      this.addExcelSheetSetting();
+      this.excelSourceSettings = {};
+      this.addExcelSourceSetting();
       console.log(this.excel);
     } else {
       this.clearFile();
@@ -47,7 +48,7 @@ export class FileSettingCreateSink {
   }
 
   @effect
-  addExcelSheetSetting() {
+  addExcelSourceSetting() {
     const id = generateId();
     const setting: ExcelSourceSetting = {
       id: id,
@@ -61,7 +62,7 @@ export class FileSettingCreateSink {
   }
 
   @effect
-  removeExcelSheetSetting(id: string) {
+  deleteExcelSourceSetting(id: string) {
     delete this.excelSourceSettings[id];
     this.excelSourceSettings = { ...this.excelSourceSettings };
   }

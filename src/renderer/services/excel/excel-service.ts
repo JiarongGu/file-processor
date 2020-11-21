@@ -33,7 +33,7 @@ export class ExcelService {
 
     for (let i = 1; i <= columns; i++) {
       const fieldIndex = `${parseColumnChar(i)}${row}`;
-      result.push(sheet[fieldIndex].v);
+      result.push(sheet[fieldIndex]?.v);
     }
 
     return result;

@@ -1,14 +1,16 @@
 import * as React from 'react';
+import * as XLSX from 'xlsx';
 import * as classnames from 'classnames';
 import { useSink } from 'react-redux-sink';
 import { FileSettingCreateSink } from '../file-setting-create-sink';
-import { Button, Input, Popconfirm, Select } from 'antd';
+import { Button, Input, Modal, Popconfirm, Select } from 'antd';
 
 import * as styles from './file-setting-create-excel-source.scss';
 import { FileSettingCreateExcelSourceField } from '../file-setting-create-excel-source-field/file-setting-create-excel-source-field';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { generateId } from '@shared';
 import { ExcelFieldConvertType, ExcelFieldSourceSetting } from '@shared/models/file-process-setting';
+import { FileSettingCreateExcelSourceTest } from '../file-setting-create-excel-source-test/file-setting-create-excel-source-test';
 
 export interface FileSettingCreateExcelSheetProps {
   className?: string;
@@ -24,14 +26,21 @@ export const FileSettingCreateExcelSource: React.FC<FileSettingCreateExcelSheetP
   const setting = sink.excelSourceSettings[id];
 
   const [sheetName, setSheetName] = React.useState<string>();
+  const [workSheet, setWorkSheet] = React.useState<XLSX.WorkSheet>();
+  const [testModel, setTestModel] = React.useState(false);
   const [fields, setFields] = React.useState<string[]>();
   const [fieldSettings, setFieldSettings] = React.useState<{ [key: string]: ExcelFieldSourceSetting }>({});
 
   React.useEffect(() => {
     if (sink.excel && sheetName) {
       const sheet = sink.excel.Sheets[sheetName];
+      setWorkSheet(sheet);
       setFields(sink.excelService.readRow(sheet, 1));
       setFieldSettings({ [generateId()]: defaultFieldSetting() });
+    } else {
+      setWorkSheet(undefined);
+      setFields([]);
+      setFieldSettings({});
     }
     setting.sheetName = sheetName;
   }, [sheetName, sink.excel, setting]);
@@ -77,8 +86,25 @@ export const FileSettingCreateExcelSource: React.FC<FileSettingCreateExcelSheetP
           </Select>
         </div>
         <div className={styles.buttonGroup}>
-          <Button>Test</Button>
-          <Popconfirm title={'Delete Settings?'} onConfirm={() => sink.removeExcelSheetSetting(id)}>
+          <Button onClick={() => setTestModel(true)}>Test</Button>
+          <Modal
+            visible={testModel}
+            onCancel={() => setTestModel(false)}
+            title={'Test Source Setting'}
+            footer={[
+              <Button key="cancel" onClick={() => setTestModel(false)}>
+                Cancel
+              </Button>,
+            ]}
+            centered
+            width={'100vw'}
+          >
+            {workSheet && (
+              <FileSettingCreateExcelSourceTest settings={Object.values(fieldSettings)} workSheet={workSheet} />
+            )}
+          </Modal>
+          <Button type={'primary'}>Save</Button>
+          <Popconfirm title={'Delete Settings?'} onConfirm={() => sink.deleteExcelSourceSetting(id)}>
             <Button type={'primary'} danger>
               Delete
             </Button>

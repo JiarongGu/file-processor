@@ -22,13 +22,13 @@ export const FileSettingCreateExcel: React.FC<FileSettingCreateExcelProps> = ({ 
   return (
     <div className={className}>
       {sheetSettings}
-      <div className={styles.settingPlaceholder} onClick={sink.addExcelSheetSetting}>
+      <div className={styles.settingPlaceholder} onClick={sink.addExcelSourceSetting}>
         <div>
           <PlusOutlined /> Add More Setting
         </div>
       </div>
       <div className={styles.buttonSection}>
-        <Button className={styles.button} type={'primary'} size={'small'} onClick={sink.addExcelSheetSetting}>
+        <Button className={styles.button} type={'primary'} size={'small'} onClick={sink.addExcelSourceSetting}>
           Save Settings
         </Button>
       </div>

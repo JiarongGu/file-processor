@@ -18,6 +18,10 @@
 
 .convert-process {
   display: flex;
-  align-items: center;
   margin-top: 8px;
+  align-items: flex-start;
+}
+
+.convert-script {
+  margin-left: 12px;
 }

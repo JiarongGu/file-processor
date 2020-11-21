@@ -1,3 +1,20 @@
 .container {
-  height: calc(70vh - 150px);
+  min-height: calc(80vh - 150px);
+  display: flex;
+  flex-direction: column;
+}
+
+.options {
+  display: flex;
+  margin-top: -12px;
+
+  > :not(:last-child) {
+    margin-right: 8px;
+  }
+}
+
+.table {
+  flex-grow: 1;
+  margin-top: 12px;
+  flex: 1 1 auto;
 }

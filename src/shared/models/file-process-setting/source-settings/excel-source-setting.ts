@@ -6,8 +6,8 @@ export interface ExcelSourceSetting {
   name?: string;
   process: FileProcessType.Source;
   category: FileCategory.Excel;
-  outputs: string[];
-  fields: ExcelFieldSourceSetting[];
+  outputs: Array<string>;
+  fields: Array<ExcelFieldSourceSetting>;
   sheetName?: string;
 }
 
@@ -20,6 +20,7 @@ export enum ExcelFieldConvertType {
 export interface ExcelFieldSourceSetting {
   name?: string;
   output?: string;
+  order?: number;
   converter: {
     type: ExcelFieldConvertType;
     value?: string;

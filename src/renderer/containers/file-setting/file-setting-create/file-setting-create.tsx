@@ -26,7 +26,7 @@ export const FileSettingCreate = () => {
             type={'primary'}
             size={'small'}
             onChange={onFileSelect}
-          ></FileSelect>
+          />
           {sink.fileType && <Tag color={'#87d068'}>{sink.fileType}</Tag>}
           <Typography.Text className={styles.inputField}>{sink.filePath}</Typography.Text>
         </div>

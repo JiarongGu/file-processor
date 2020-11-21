@@ -1,35 +1,59 @@
 import * as _ from 'lodash';
 import * as XLSX from 'xlsx';
 
-const NUMBER_CHAR = _.range(26).map((i) => String.fromCharCode(65 + i));
+const NUMBER_CHAR = Array.apply(null, Array(26)).map((_, i) => String.fromCharCode(65 + i));
 const CHAR_NUMBER = NUMBER_CHAR.reduce((p, c, i) => ((p[c] = i), p), {});
 
-const NUMBER_C26 = _.range(26).map((i) => (i < 10 ? i.toString() : NUMBER_CHAR[i - 10]));
+const NUMBER_C26 = Array.apply(null, Array(26)).map((_, i) => (i < 10 ? i.toString() : NUMBER_CHAR[i - 10]));
 const C26_NUMBER = NUMBER_C26.reduce((p, c, i) => ((p[c] = i), p), {});
 
 const parseColumnNum = (column: string) => {
-  return parseInt(
-    column
-      .split('')
-      .map((c) => NUMBER_C26[CHAR_NUMBER[c] + 1])
-      .join(''),
-    26
-  );
+  const c26Array = Array.apply(null, Array(column.length + 1)).map((x) => '0');
+
+  column
+    .split('')
+    .reverse()
+    .forEach((c, i) => {
+      const num = CHAR_NUMBER[c] + 1;
+      const cur = C26_NUMBER[c26Array[i]];
+      const val = num === 26 ? 0 : num;
+
+      c26Array[i] = cur ? NUMBER_C26[cur + val] : NUMBER_C26[val];
+
+      if (val === 0) {
+        c26Array[i + 1] = NUMBER_C26[1];
+      }
+    });
+
+  return parseInt(c26Array.reverse().join(''), 26);
 };
 
 const parseColumnChar = (number: number) => {
-  return number
-    .toString(26)
-    .toUpperCase()
-    .split('')
-    .map((n) => NUMBER_CHAR[C26_NUMBER[n] - 1])
+  const numArray: Array<number> = [];
+  const c26s = number.toString(26).toUpperCase().split('').reverse();
+
+  c26s.forEach((c, i) => {
+    const cur = numArray[i] ?? 0;
+    const num = C26_NUMBER[c] + cur - 1;
+
+    if (num < 0 && i !== c26s.length - 1) {
+      numArray[i] = 25;
+      numArray[i + 1] = num;
+    } else {
+      numArray[i] = num;
+    }
+  });
+
+  return numArray
+    .reverse()
+    .map((num) => NUMBER_CHAR[num])
     .join('');
 };
 
 export class ExcelService {
   readRow(sheet: XLSX.WorkSheet, row: number, columns?: number) {
     if (!columns) columns = this.countColumn(sheet);
-    const result: string[] = [];
+    const result: Array<string> = [];
 
     for (let i = 1; i <= columns; i++) {
       const fieldIndex = `${parseColumnChar(i)}${row}`;

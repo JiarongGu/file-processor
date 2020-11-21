@@ -17,6 +17,16 @@ export const FileSettingCreateExcelSourceField: React.FC<FileSettingCreateExcelS
   className,
   setting,
 }) => {
+  const [converterType, setConvertorType] = React.useState(ExcelFieldConvertType.None);
+
+  const onConverterTypeChange = React.useCallback(
+    (value) => {
+      setting.converter.type = value;
+      setConvertorType(value);
+    },
+    [converterType]
+  );
+
   return (
     <div className={classnames(styles.container, className)}>
       <div className={styles.fieldProcess}>
@@ -44,7 +54,7 @@ export const FileSettingCreateExcelSourceField: React.FC<FileSettingCreateExcelS
       </div>
       <div className={styles.convertProcess}>
         <div>
-          <Select defaultValue={ExcelFieldConvertType.None}>
+          <Select defaultValue={converterType} onChange={onConverterTypeChange}>
             <Select.Option key={ExcelFieldConvertType.None} value={ExcelFieldConvertType.None}>
               None
             </Select.Option>
@@ -56,6 +66,14 @@ export const FileSettingCreateExcelSourceField: React.FC<FileSettingCreateExcelS
             </Select.Option>
           </Select>
         </div>
+        {converterType === ExcelFieldConvertType.Script && (
+          <Input.TextArea
+            className={styles.convertScript}
+            onChange={(event) => {
+              setting.converter.value = event.target.value;
+            }}
+          />
+        )}
       </div>
     </div>
   );

@@ -119,7 +119,7 @@ export const FileSettingCreateExcelSource: React.FC<FileSettingCreateExcelSheetP
         <div className={styles.fields}>
           {Object.keys(fieldSettings).map((key) => (
             <div key={key} className={styles.field}>
-              <Button onClick={() => onDeleteFieldClicked(key)} type={'text'} danger>
+              <Button onClick={() => onDeleteFieldClicked(key)} type={'text'} danger={true}>
                 <CloseOutlined />
               </Button>
               <FileSettingCreateExcelSourceField setting={fieldSettings[key]} fields={fields} />

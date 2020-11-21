@@ -1,3 +1,25 @@
 .button-section {
   padding: 12px 8px;
+  margin: 0 -8px;
+}
+
+.button {
+  margin: 0 8px;
+}
+
+.setting-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  border: 1px #c0c0c0 dashed;
+  margin-top: 16px;
+  color: grey;
+  background: #eeeeee;
+
+  &:hover {
+    background: white;
+    border: 1px #c0c0c0 solid;
+    cursor: pointer;
+  }
 }

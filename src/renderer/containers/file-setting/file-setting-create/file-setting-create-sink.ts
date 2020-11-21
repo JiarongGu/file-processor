@@ -1,5 +1,6 @@
 import { ExcelService } from '@services/excel/ExcelService';
-import { ExcelSheetSourceSetting } from '@shared/models/file-process-setting';
+import { generateId } from '@shared';
+import { ExcelSourceSetting, FileCategory, FileProcessType } from '@shared/models/file-process-setting';
 import { runAsync } from '@shared/utils/runAsync';
 import { effect, sink, state, trigger } from 'react-redux-sink';
 import * as XLSX from 'xlsx';
@@ -18,7 +19,7 @@ export class FileSettingCreateSink {
   excel?: XLSX.WorkBook;
 
   @state
-  excelSheetSourceSettings: { [key: string]: ExcelSheetSourceSetting } = {};
+  excelSourceSettings: { [key: string]: ExcelSourceSetting } = {};
 
   @state
   excelService: ExcelService = new ExcelService();
@@ -43,15 +44,21 @@ export class FileSettingCreateSink {
 
   @effect
   addExcelSheetSetting() {
-    const id = Date.now().toString(36);
-    const setting: ExcelSheetSourceSetting = { fields: [] };
-    this.excelSheetSourceSettings = { ...this.excelSheetSourceSettings, [id]: setting };
-    return id;
+    const id = generateId();
+    const setting: ExcelSourceSetting = {
+      id: id,
+      fields: [],
+      outputs: [],
+      category: FileCategory.Excel,
+      process: FileProcessType.Source,
+    };
+    this.excelSourceSettings = { ...this.excelSourceSettings, [id]: setting };
+    return setting;
   }
 
   @effect
   removeExcelSheetSetting(id: string) {
-    delete this.excelSheetSourceSettings[id];
-    this.excelSheetSourceSettings = { ...this.excelSheetSourceSettings };
+    delete this.excelSourceSettings[id];
+    this.excelSourceSettings = { ...this.excelSourceSettings };
   }
 }

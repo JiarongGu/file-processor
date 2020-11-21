@@ -3,25 +3,25 @@ import { FileCategory } from '../file-category.enum';
 
 export interface ExcelSourceSetting {
   id: string;
-  name: string;
+  name?: string;
   process: FileProcessType.Source;
   category: FileCategory.Excel;
-  sheets: ExcelSheetSourceSetting[];
   outputs: string[];
+  fields: ExcelFieldSourceSetting[];
+  sheetName?: string;
 }
 
-export interface ExcelSheetSourceSetting {
-  name?: string;
-  fields: ExcelFieldSourceSetting[];
+export enum ExcelFieldConvertType {
+  None = 'NONE',
+  Script = 'SCRIPT',
+  Regex = 'REGEX',
 }
 
 export interface ExcelFieldSourceSetting {
-  id: string;
   name: string;
   output: string;
   converter: {
-    order?: number;
-    match?: string;
-    convert: string;
+    type: ExcelFieldConvertType;
+    value?: string;
   };
 }

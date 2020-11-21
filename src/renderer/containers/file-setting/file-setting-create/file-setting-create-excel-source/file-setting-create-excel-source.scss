@@ -1,0 +1,24 @@
+.container {
+  margin-top: 16px;
+  padding: 16px;
+  background: white;
+  border: 1px solid #c0c0c0;
+}
+
+.process-selection {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.input-name {
+  margin-right: 16px;
+}
+
+.field {
+  margin-top: 16px;
+}

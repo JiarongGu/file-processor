@@ -1,0 +1,28 @@
+.container {
+  padding: 8px;
+  display: flex;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.field-process {
+  display: flex;
+  align-items: center;
+
+  > :not(:last-child) {
+    margin-right: 8px;
+  }
+}
+
+.field-selection {
+  width: 200px;
+}
+
+.convert-process {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}

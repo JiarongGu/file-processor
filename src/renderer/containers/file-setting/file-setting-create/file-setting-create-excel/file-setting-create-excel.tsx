@@ -5,25 +5,31 @@ import { FileSettingCreateSink } from '../file-setting-create-sink';
 import { Button } from 'antd';
 
 import * as styles from './file-setting-create-excel.scss';
-import { FileSettingCreateExcelSheet } from '../file-setting-create-excel-sheet/file-setting-create-excel-sheet';
+import { FileSettingCreateExcelSource } from '../file-setting-create-excel-source/file-setting-create-excel-source';
+import { PlusOutlined } from '@ant-design/icons';
 
 export interface FileSettingCreateExcelProps {
   className?: string;
 }
 
 export const FileSettingCreateExcel: React.FC<FileSettingCreateExcelProps> = ({ className }) => {
-  const sink = useSink(FileSettingCreateSink, (state) => [state.excel, state.excelSheetSourceSettings]);
+  const sink = useSink(FileSettingCreateSink, (state) => [state.excel, state.excelSourceSettings]);
 
   const sheetSettings = React.useMemo(() => {
-    return Object.keys(sink.excelSheetSourceSettings).map((id) => <FileSettingCreateExcelSheet key={id} id={id} />);
-  }, [sink.excelSheetSourceSettings]);
+    return Object.keys(sink.excelSourceSettings).map((id) => <FileSettingCreateExcelSource key={id} id={id} />);
+  }, [sink.excelSourceSettings]);
 
   return (
     <div className={className}>
       {sheetSettings}
+      <div className={styles.settingPlaceholder} onClick={sink.addExcelSheetSetting}>
+        <div>
+          <PlusOutlined /> Add More Setting
+        </div>
+      </div>
       <div className={styles.buttonSection}>
-        <Button type={'primary'} size={'small'} onClick={sink.addExcelSheetSetting}>
-          Add Setting
+        <Button className={styles.button} type={'primary'} size={'small'} onClick={sink.addExcelSheetSetting}>
+          Save Settings
         </Button>
       </div>
     </div>

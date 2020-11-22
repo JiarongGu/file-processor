@@ -31,6 +31,7 @@ export class FileService implements IFileService {
   }
 
   public async write(filePath: string, text: string) {
+    console.log(this.pathService.getResourcePath(filePath));
     await fs.writeFile(this.pathService.getResourcePath(filePath), text);
   }
 }

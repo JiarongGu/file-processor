@@ -13,7 +13,7 @@ const createEventHandler = (service) => async (event: IpcMainInvokeEvent, method
 export function createIpc() {
   ipcMain.handle(RemoteServiceType.File, createEventHandler(container.resolve(FileService)));
 
-  ipcMain.handle(RemoteServiceType.SOURCE_REPOSITORY, createEventHandler(container.resolve(SourceRepository)));
+  ipcMain.handle(RemoteServiceType.SourceRepository, createEventHandler(container.resolve(SourceRepository)));
 
   ipcMain.handle(RemoteServiceType.FileProcessSetting, createEventHandler(new FileProcessSettingRepository()));
 }

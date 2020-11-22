@@ -4,10 +4,10 @@ import { generateId } from '@shared';
 import { FileType } from '@shared/models/file-process-setting';
 import { SourceSetting } from '@shared/models/source';
 import { ExcelSource } from '@shared/models/source/excel-source';
-import { runAsync } from '@shared/utils/runAsync';
 import { effect, sink, state, trigger } from 'react-redux-sink';
 import * as XLSX from 'xlsx';
 import { container } from 'tsyringe';
+import { SourceService } from '@services/source/source-service';
 
 const xlsx = /([a-zA-Z0-9\s_\\.\-\(\):])+(.xlsx)$/;
 
@@ -30,6 +30,9 @@ export class SourceCreateSink {
 
   @state
   excelProcessService: ExcelSourceService = container.resolve(ExcelSourceService);
+
+  @state
+  sourceService: SourceService = container.resolve(SourceService);
 
   clearFile() {
     this.filePath = undefined;
@@ -66,5 +69,14 @@ export class SourceCreateSink {
   deleteSource(id: string) {
     delete this.sources[id];
     this.sources = { ...this.sources };
+  }
+
+  @effect
+  saveSource(id: string) {
+    const setting = this.sources[id];
+    console.log(setting);
+    if (setting) {
+      this.sourceService.save(id, setting);
+    }
   }
 }

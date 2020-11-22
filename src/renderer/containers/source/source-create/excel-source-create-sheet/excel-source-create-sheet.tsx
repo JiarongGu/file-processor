@@ -104,7 +104,7 @@ export const ExcelSourceCreateSheet: React.FC<ExcelSourceCreateSheetProps> = ({ 
           >
             {workSheet && <ExcelSourceCreateTest settings={Object.values(fieldSettings)} workSheet={workSheet} />}
           </Modal>
-          <Button className={styles.button} type={'primary'}>
+          <Button className={styles.button} type={'primary'} onClick={() => sink.saveSource(id)}>
             Save
           </Button>
           <Popconfirm title={'Delete Settings?'} onConfirm={() => sink.deleteSource(id)}>

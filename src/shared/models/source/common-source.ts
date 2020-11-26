@@ -3,7 +3,7 @@ import { FileType } from '../file/file-type.enum';
 
 export interface CommonSource {
   name: string;
-  process: FileProcessType.Source;
-  category: FileType.Common;
+  fileType: FileType.Common;
+  fields: any[];
   [option: string]: any;
 }

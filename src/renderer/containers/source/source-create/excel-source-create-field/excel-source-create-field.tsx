@@ -10,9 +10,15 @@ interface ExcelSourceCreateFieldProps {
   fields: Array<string>;
   className?: string;
   setting: ExcelSourceField;
+  sourceId: string;
 }
 
-export const ExcelSourceCreateField: React.FC<ExcelSourceCreateFieldProps> = ({ fields, className, setting }) => {
+export const ExcelSourceCreateField: React.FC<ExcelSourceCreateFieldProps> = ({
+  fields,
+  className,
+  sourceId,
+  setting,
+}) => {
   const [converterType, setConvertorType] = React.useState(ExcelFieldConvertorType.None);
 
   const onConverterTypeChange = React.useCallback(

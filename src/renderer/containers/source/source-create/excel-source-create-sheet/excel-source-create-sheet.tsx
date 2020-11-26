@@ -30,18 +30,18 @@ export const ExcelSourceCreateSheet: React.FC<ExcelSourceCreateSheetProps> = ({ 
   const [workSheet, setWorkSheet] = React.useState<XLSX.WorkSheet>();
   const [testModel, setTestModel] = React.useState(false);
   const [fields, setFields] = React.useState<Array<string>>();
-  const [fieldSettings, setFieldSettings] = React.useState<{ [key: string]: ExcelSourceField }>({});
 
   React.useEffect(() => {
     if (sink.excel && sheetName) {
       const sheet = sink.excel.Sheets[sheetName];
       setWorkSheet(sheet);
       setFields(sink.excelService.readRow(sheet, 1));
-      setFieldSettings({ [generateId()]: defaultFieldSetting() });
+      sink.clearSourceField(id);
+      sink.addSourceField(id);
     } else {
       setWorkSheet(undefined);
       setFields([]);
-      setFieldSettings({});
+      sink.clearSourceField(id);
     }
     setting.sheetName = sheetName;
   }, [sheetName, sink.excel, setting]);
@@ -52,24 +52,6 @@ export const ExcelSourceCreateSheet: React.FC<ExcelSourceCreateSheetProps> = ({ 
     },
     [setting]
   );
-
-  const onAddFieldClicked = React.useCallback(() => {
-    setFieldSettings((settings) => {
-      return {
-        ...settings,
-        [generateId()]: defaultFieldSetting(),
-      };
-    });
-  }, []);
-
-  const onDeleteFieldClicked = React.useCallback((id) => {
-    setFieldSettings((settings) => {
-      delete settings[id];
-      return {
-        ...settings,
-      };
-    });
-  }, []);
 
   return (
     <div className={classnames(styles.container, className)}>
@@ -102,7 +84,7 @@ export const ExcelSourceCreateSheet: React.FC<ExcelSourceCreateSheetProps> = ({ 
             centered={true}
             width={'100vw'}
           >
-            {workSheet && <ExcelSourceCreateTest settings={Object.values(fieldSettings)} workSheet={workSheet} />}
+            {workSheet && <ExcelSourceCreateTest settings={sink.sources[id].fields} workSheet={workSheet} />}
           </Modal>
           <Button className={styles.button} type={'primary'} onClick={() => sink.saveSource(id)}>
             Save
@@ -116,16 +98,16 @@ export const ExcelSourceCreateSheet: React.FC<ExcelSourceCreateSheetProps> = ({ 
       </div>
       {fields && (
         <div className={styles.fields}>
-          {Object.keys(fieldSettings).map((key) => (
-            <div key={key} className={styles.field}>
-              <Button onClick={() => onDeleteFieldClicked(key)} type={'text'} danger={true}>
+          {sink.sources[id].fields.map((field, index) => (
+            <div key={index} className={styles.field}>
+              <Button onClick={() => sink.deleteSourceField(id, index)} type={'text'} danger={true}>
                 <CloseOutlined />
               </Button>
-              <ExcelSourceCreateField setting={fieldSettings[key]} fields={fields} />
+              <ExcelSourceCreateField sourceId={id} setting={field} fields={fields} />
             </div>
           ))}
           <div className={styles.fieldButton}>
-            <Button size={'small'} type={'primary'} onClick={onAddFieldClicked}>
+            <Button size={'small'} type={'primary'} onClick={() => sink.addSourceField(id)}>
               <PlusOutlined />
               Add Field
             </Button>

@@ -17,7 +17,7 @@ export const SourceContainer: React.FunctionComponent = () => {
     <Layout>
       <HeaderBanner title={layout.activeRoute.model.banner ?? ''} />
       <Layout.Content className={styles.content}>
-        <RouteContent routes={routes} />
+        {sourceRoute && sourceRoute.routes && <RouteContent routes={sourceRoute.routes} />}
       </Layout.Content>
     </Layout>
   );

@@ -3,7 +3,7 @@ import { ExcelService } from '@services/excel/excel-service';
 import { generateId } from '@shared';
 import { FileType } from '@shared/models/file-process-setting';
 import { SourceSetting } from '@shared/models/source';
-import { ExcelSource } from '@shared/models/source/excel-source';
+import { ExcelFieldConvertorType, ExcelSource } from '@shared/models/source/excel-source';
 import { effect, sink, state, trigger } from 'react-redux-sink';
 import * as XLSX from 'xlsx';
 import { container } from 'tsyringe';
@@ -23,7 +23,7 @@ export class SourceCreateSink {
   excel?: XLSX.WorkBook;
 
   @state
-  sources: { [key: string]: SourceSetting } = {};
+  sources: { [key: string]: ExcelSource } = {};
 
   @state
   excelService: ExcelService = container.resolve(ExcelService);
@@ -74,9 +74,37 @@ export class SourceCreateSink {
   @effect
   saveSource(id: string) {
     const setting = this.sources[id];
-    console.log(setting);
     if (setting) {
       this.sourceService.save(id, setting);
+    }
+  }
+
+  @effect
+  addSourceField(id: string) {
+    const source = this.sources[id];
+    if (source) {
+      source.fields.push({
+        converter: { type: ExcelFieldConvertorType.None },
+      });
+      this.sources = { ...this.sources, [id]: source };
+    }
+  }
+
+  @effect
+  deleteSourceField(id: string, fieldId: number) {
+    const source = this.sources[id];
+    if (source) {
+      source.fields.splice(fieldId, 1);
+      this.sources = { ...this.sources, [id]: source };
+    }
+  }
+
+  @effect
+  clearSourceField(id: string) {
+    const source = this.sources[id];
+    if (source) {
+      source.fields = [];
+      this.sources = { ...this.sources, [id]: source };
     }
   }
 }

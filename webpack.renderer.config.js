@@ -21,6 +21,7 @@ module.exports = merge.smart(baseConfig, {
   entry: {
     app: ['@babel/polyfill', './index.tsx']
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {

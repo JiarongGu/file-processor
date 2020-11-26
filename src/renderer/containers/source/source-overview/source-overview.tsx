@@ -22,6 +22,14 @@ export const SourceOverview = (props: RouteComponentProps) => {
     sink.load();
   }, []);
 
+  const sources = React.useMemo(() => {
+    return Object.keys(sink.sources).map((x) => {
+      const source = sink.sources[x];
+
+      return { name: source.name ?? x, type: source.category, key: x };
+    });
+  }, [sink.sources]);
+
   return (
     <div className={classnames('section-container', styles.container)}>
       <div className={styles.actions}>
@@ -29,7 +37,7 @@ export const SourceOverview = (props: RouteComponentProps) => {
           Create New Setting
         </Button>
       </div>
-      <Table columns={columns} />
+      <Table columns={columns} dataSource={sources} />
     </div>
   );
 };

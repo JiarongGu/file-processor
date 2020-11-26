@@ -11,9 +11,8 @@ import { ExcelSourceCreate } from './excel-source-create/excel-source-create';
 export const SourceCreate = () => {
   const sink = useSink(SourceCreateSink);
 
-  const onFileSelect = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = (event.target as any).files;
-    sink.filePath = files && files[0]?.path;
+  const onFileSelect = React.useCallback((value?: string) => {
+    sink.filePath = value;
   }, []);
 
   return (

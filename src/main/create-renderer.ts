@@ -5,13 +5,10 @@ import * as url from 'url';
 
 const installExtensions = async () => {
   const extensions = [REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS];
-  return Promise.all(extensions.map(name => installExtension(name))).catch(console.log);
+  return Promise.all(extensions.map((name) => installExtension(name))).catch(console.log);
 };
 
-export const createRenderer = (
-  onCreate: (win: BrowserWindow) => void , 
-  onClose: () => void
-) => async () => {
+export const createRenderer = (onCreate: (win: BrowserWindow) => void, onClose: () => void) => async () => {
   if (process.env.NODE_ENV !== 'production') {
     await installExtensions();
   }
@@ -21,8 +18,9 @@ export const createRenderer = (
     height: 800,
     webPreferences: {
       nodeIntegration: true,
-      nodeIntegrationInWorker: true
-    }
+      nodeIntegrationInWorker: true,
+      enableRemoteModule: true,
+    },
   });
 
   if (process.env.NODE_ENV !== 'production') {
@@ -33,7 +31,7 @@ export const createRenderer = (
       url.format({
         pathname: path.join(__dirname, 'index.html'),
         protocol: 'file:',
-        slashes: true
+        slashes: true,
       })
     );
     win.setMenu(null);

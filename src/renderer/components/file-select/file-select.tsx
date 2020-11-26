@@ -5,7 +5,7 @@ import { SizeType } from 'antd/lib/config-provider/SizeContext';
 
 export interface FileSelectProps {
   text: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (value?: string) => void;
   type?: ButtonType;
   shape?: ButtonShape;
   size?: SizeType;
@@ -13,6 +13,16 @@ export interface FileSelectProps {
 }
 
 export const FileSelect: React.FC<FileSelectProps> = ({ className, text, onChange, type, shape, size }) => {
+  const onFileChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const files = (event.target as any).files;
+      if (onChange) {
+        onChange(files && files[0]?.path);
+      }
+    },
+    [onChange]
+  );
+
   return (
     <label
       className={classnames('ant-btn', className, {
@@ -22,7 +32,7 @@ export const FileSelect: React.FC<FileSelectProps> = ({ className, text, onChang
         [`ant-btn-lg`]: size === 'large',
       })}
     >
-      <input type="file" style={{ display: 'none' }} onChange={onChange}></input>
+      <input type="file" style={{ display: 'none' }} onChange={onFileChange}></input>
       {text}
     </label>
   );

@@ -1,5 +1,5 @@
 {
-  "name": "destiny-child-viewer",
+  "name": "file-processor",
   "version": "0.0.1",
   "description": "",
   "main": "./dist/main.js",
@@ -38,10 +38,10 @@
     }
   },
   "build": {
-    "productName": "Destiny Child Viewer",
-    "appId": "jiaronggu.destiny-child-viewer",
+    "productName": "File Processor",
+    "appId": "jiaronggu.file-processor",
     "mac": {
-      "category": "jiaronggu.destiny-child-viewer"
+      "category": "jiaronggu.file-processor"
     },
     "directories": {
       "output": "release"
@@ -69,7 +69,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:JiarongGu/destiny-child-viewer.git"
+    "url": "git+ssh://git@github.com:JiarongGu/file-processor.git"
   },
   "author": {
     "name": "Jiarong Gu",
@@ -77,9 +77,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/JiarongGu/destiny-child-viewer/issues"
+    "url": "https://github.com/JiarongGu/file-processor/issues"
   },
-  "homepage": "https://github.com/JiarongGu/destiny-child-viewer",
+  "homepage": "https://github.com/JiarongGu/file-processor",
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",

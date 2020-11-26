@@ -1,8 +1,6 @@
 import { ExcelSourceService } from '@services/source/excel-source-service';
 import { ExcelService } from '@services/excel/excel-service';
-import { generateId } from '@shared';
-import { FileType } from '@shared/models/file-process-setting';
-import { SourceSetting } from '@shared/models/source';
+import { FileType, generateId } from '@shared';
 import { ExcelFieldConvertorType, ExcelSource } from '@shared/models/source/excel-source';
 import { effect, sink, state, trigger } from 'react-redux-sink';
 import * as XLSX from 'xlsx';

@@ -1,0 +1,115 @@
+{
+  "fields": [
+    {
+      "converter": {
+        "type": "NONE"
+      },
+      "name": "学生名字",
+      "output": "姓名"
+    },
+    {
+      "converter": {
+        "type": "NONE"
+      },
+      "name": "姓名拼音",
+      "output": "拼音"
+    },
+    {
+      "converter": {
+        "type": "NONE"
+      },
+      "name": "所属地区",
+      "output": "地区"
+    },
+    {
+      "converter": {
+        "type": "NONE"
+      },
+      "name": "在读或将入读学校",
+      "output": "在读或将入读学校"
+    },
+    {
+      "converter": {
+        "type": "NONE"
+      },
+      "name": "在读或将入读专业",
+      "output": "在读或将入读专业"
+    },
+    {
+      "converter": {
+        "type": "NONE"
+      },
+      "name": "优培/直销/语培",
+      "output": "产品类型（境外产品服务/优培/直销）"
+    },
+    {
+      "converter": {
+        "type": "NONE"
+      },
+      "output": "产品/课程名称",
+      "name": "课程"
+    },
+    {
+      "converter": {
+        "type": "SCRIPT",
+        "value": "function (value, context) {\n  if(value && value.toString().indexOf(\"4\") == 0) {\n    return value; \n  }\n}"
+      },
+      "name": "学生联系电话",
+      "output": "澳洲电话"
+    },
+    {
+      "converter": {
+        "type": "NONE"
+      },
+      "output": "入境日期",
+      "name": "入境日期"
+    },
+    {
+      "converter": {
+        "type": "NONE"
+      },
+      "output": "微信号",
+      "name": "学生微信"
+    },
+    {
+      "converter": {
+        "type": "NONE"
+      },
+      "output": "签约顾问",
+      "name": "顾问名字"
+    },
+    {
+      "converter": {
+        "type": "NONE"
+      },
+      "name": "考培/英爱/澳新顾问填城市",
+      "output": "考培/英爱/澳新顾问城市"
+    },
+    {
+      "converter": {
+        "type": "NONE"
+      },
+      "name": "总课时",
+      "output": "总课时（学府课程）"
+    },
+    {
+      "converter": {
+        "type": "SCRIPT",
+        "value": "function (value, context) {\n  if(value == \"0\")\n    return \"办结\";\n  return value;\n}"
+      },
+      "name": "剩余课时",
+      "output": "服务进度（产品进度为未启动/服务中/暂停/办结：学府课程进程为当月剩余课时数）"
+    },
+    {
+      "converter": {
+        "type": "SCRIPT",
+        "value": "function(value, context) {\n  if(value.indexOf(\"暂停\") >= 0) {\n    return \"暂停\"; \n  }\n  if(value.indexOf(\"退费\") >= 0) {\n    return \"退费\"; \n  }\n}\n"
+      },
+      "name": "备注",
+      "output": "备注"
+    }
+  ],
+  "outputs": [],
+  "category": "excel",
+  "sheetName": "境外"
+}

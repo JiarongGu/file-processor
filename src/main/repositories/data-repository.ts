@@ -1,12 +1,16 @@
 import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';
 
-import { FileProcessSetting, FileProcessType } from '@shared/models/file-process-setting';
-import { IFileProcessSettingRepository } from '@shared/remote/file-process-setting-repository';
 import { dbContext } from './db-context';
 
-export class FileProcessSettingRepository implements IFileProcessSettingRepository {
-  async list(process?: FileProcessType): Promise<FileProcessSetting[]> {
+export class DataRepository<T extends { id: string }> {
+  name: string;
+
+  constructor(name) {
+    this.name = name;
+  }
+
+  async list(process?: T): Promise<T[]> {
     const collection = await this.collection();
     if (!process) {
       return collection.value();
@@ -15,7 +19,7 @@ export class FileProcessSettingRepository implements IFileProcessSettingReposito
     }
   }
 
-  async fetch(id: string, _?: FileProcessType): Promise<FileProcessSetting> {
+  async fetch(id: string, _?: T): Promise<T> {
     const collection = await this.collection();
     return collection
       .filter((x) => x.id === id)
@@ -23,14 +27,14 @@ export class FileProcessSettingRepository implements IFileProcessSettingReposito
       .value();
   }
 
-  async create(value: FileProcessSetting): Promise<FileProcessSetting> {
+  async create(value: T): Promise<T> {
     value.id = uuid();
     const collection = await this.collection();
     await collection.push(value).write();
     return value;
   }
 
-  async update(value: FileProcessSetting) {
+  async update(value: T) {
     const collection = await this.collection();
     await collection
       .find((x) => x.id === value.id)
@@ -46,7 +50,7 @@ export class FileProcessSettingRepository implements IFileProcessSettingReposito
       .write();
   }
 
-  private async collection() {
-    return (await dbContext()).get('file-source-setting');
+  private async collection(): Promise<any> {
+    return (await dbContext()).get(this.name);
   }
 }

@@ -8,7 +8,7 @@ import { SinkFactory } from 'react-redux-sink';
 import { Router } from 'react-router';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { App, sourceRoute } from '@containers';
+import { App, sinkRoute, sourceRoute } from '@containers';
 import { WindowSink, NavigationSink } from '@sinks';
 
 import 'antd/dist/antd.css';
@@ -22,7 +22,9 @@ const store = SinkFactory.createStore({
 // initialize sinks
 WindowSink.load(window);
 
-const history = NavigationSink.createHistory([sourceRoute]);
+const routes = [sinkRoute, sourceRoute];
+
+const history = NavigationSink.createHistory(routes);
 
 ReactDOM.render(
   <AppContainer>

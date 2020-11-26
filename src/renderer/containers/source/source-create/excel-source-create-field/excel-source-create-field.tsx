@@ -36,6 +36,7 @@ export const ExcelSourceCreateField: React.FC<ExcelSourceCreateFieldProps> = ({
           <Select
             className={styles.fieldSelection}
             placeholder={'Select Input Field'}
+            defaultValue={setting.name}
             onChange={(value: string) => (setting.name = value)}
           >
             {fields.map((field) => (
